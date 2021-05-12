@@ -5,7 +5,7 @@ include("connexion_bdd.php");
 class dbshoop {
     
     /**
-     * delete DbShoop Delete from livres
+     * Delete book selected from "livres"
      *
      * @param int $id 
      *
@@ -22,7 +22,7 @@ class dbshoop {
     }
     
     /**
-     * Dèscription de la function 
+     * Description of function 
      *
      * @return $res_listLivres
      */
