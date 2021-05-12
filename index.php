@@ -85,166 +85,158 @@ $res_listLivres = $dbshoop->getDbShoop();
 </head>
 
 
-<body>
+    <body>
 
-    <div class="row">
-        <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-9">
 
-            <label>
-                <u>
-                    <b>
-                        LISTE DES LIVRES
-                    </b>
-                </u>
-            </label>
-
-
-            <?php
+                <label>
+                    <u>
+                        <b>
+                            LISTE DES LIVRES
+                        </b>
+                    </u>
+                </label>
 
 
-            // CONDITIONS \\
-            // Afficher la liste des livres
-            //si $res_listLivres contient au moins une données 
-            if ($res_listLivres->num_rows > 0) {
-                //faire ceci
-                echo "<table>";
+                <?php
 
-                    echo "<th>";
-                        echo "Nom";
-                    echo "</th>";
+                // CONDITIONS \\
+                // Afficher la liste des livres
+                //si $res_listLivres contient au moins une données 
+                if ($res_listLivres->num_rows > 0) {
+                    //faire ceci
+                    echo "<table>";
 
-                    echo "<th>";
-                        echo "Prix";
-                    echo "</th>";
+                        echo "<th>";
+                            echo "Nom";
+                        echo "</th>";
 
-                    echo "<th>";
-                        echo "Actions";
-                    echo "</th>";
+                        echo "<th>";
+                            echo "Prix";
+                        echo "</th>";
 
-                foreach ($res_listLivres as $valeur) { //Boucle : Pour chaque resultat 
+                        echo "<th>";
+                            echo "Actions";
+                        echo "</th>";
 
-                    if (($etat == "ouvrir") && ($id_clique == $valeur['id'])) {
+                    foreach ($res_listLivres as $valeur) { //Boucle : Pour chaque resultat 
 
-                    echo '<form action="index.php" method="post">';
-                        echo "<input type='hidden' name='id_livre' value=" . $valeur['id'] . ">";
+                        if (($etat == "ouvrir") && ($id_clique == $valeur['id'])) {
+
+                            echo '<form action="index.php" method="post">';
+                                echo "<input type='hidden' name='id_livre' value=" . $valeur['id'] . ">";
+                                    echo "<tr>";
+
+                                        echo "<td>";
+                                            echo "<input type='text' name='new_nom'  value='" . $valeur['nom'] . "'>";
+                                        echo "</td>";
+
+                                        echo "<td>";
+                                            echo "<input type='text' name='new_prix'  value='" . $valeur['prix'] . "'>";
+                                        echo "</td>";
+
+                                        echo "<td>";
+                                            echo "<input type='submit' name='btn' value='Confirmer'/>";
+                                        echo "</td>";
+
+                                    echo "<tr>";
+                            echo '</form>';
+
+
+                            // -------------------------------------------------------
+                        } else {
+
                             echo "<tr>";
 
                                 echo "<td>";
-                                    echo "<input type='text' name='new_nom'  value='" . $valeur['nom'] . "'>";
+                                    echo $valeur['nom'];
                                 echo "</td>";
 
                                 echo "<td>";
-                                    echo "<input type='text' name='new_prix'  value='" . $valeur['prix'] . "'>";
+                                    echo $valeur['prix'];
                                 echo "</td>";
 
                                 echo "<td>";
-                                    echo "<input type='submit' name='btn' value='Confirmer'/>";
+
+                                    echo '<form action="index.php" method="post">';
+
+                                        echo "<input type='submit' name='btn' value='Modifier'/>";
+                                        echo "<input type='hidden' name='id_livre' value=" . $valeur['id'] . ">";
+
+                                    echo '</form>';
+
+                                    echo '<form action="index.php" method="post">';
+
+                                        echo "<input type='hidden' name='id_livre' value=" . $valeur['id'] . ">";
+                                        echo "<input type='submit' name='btn' value='Supprimer'/>";
+
+                                    echo '</form>';
+
                                 echo "</td>";
 
-                            echo "<tr>";
-                    echo '</form>';
-
-
-
-
-                        // -------------------------------------------------------
-                    } else {
-
-                    echo "<tr>";
-
-                        echo "<td>";
-                            echo $valeur['nom'];
-                        echo "</td>";
-
-                        echo "<td>";
-                            echo $valeur['prix'];
-                        echo "</td>";
-
-                        echo "<td>";
-
-                            echo '<form action="index.php" method="post">';
-
-                                echo "<input type='submit' name='btn' value='Modifier'/>";
-                                echo "<input type='hidden' name='id_livre' value=" . $valeur['id'] . ">";
-
-                            echo '</form>';
-
-                            echo '<form action="index.php" method="post">';
-
-                                echo "<input type='hidden' name='id_livre' value=" . $valeur['id'] . ">";
-                                echo "<input type='submit' name='btn' value='Supprimer'/>";
-
-                            echo '</form>';
-
-                        echo "</td>";
-
-                    echo "</tr>";
-                    //afficher nom
-                    //echo '<br>';
-                    //echo $valeur['nom']." | ";
-                    //afficher prix
-                    //echo $valeur['prix']."<br/>";
+                            echo "</tr>";
+                            
+                        }
                     }
+
+                    echo "</table>";
+
+                } else { //sinon
+                    //faire cela
+                    echo "Il n'y a aucun résultats";
                 }
 
-                echo "</table>";
-            } else { //sinon
-                //faire cela
-                echo "Il n'y a aucun résultats";
-            }
+                ?>
 
-            ?>
+            </div>
 
-        </div>
+                    <br>
 
-            <br>
+            <div class="col-md-3">
 
-        <div class="col-md-3">
 
-            <label>
-                <u>
-                    <b>
-                        CREER UN LIVRES
-                    </b>
-                </u>
-            </label>
+                <label>
+                    <u>
+                        <b>
+                            CREER UN LIVRES
+                        </b>
+                    </u>
+                </label>
 
-        
+            
+                <?php
 
-            <?php
+                // <!-- CREER UN LIVRE  -->
+                echo '<form  method="POST" action="index.php">';
 
-            // <!-- CREER UN LIVRE  -->
-            echo '<form  method="POST" action="index.php">';
-                echo '<u>';
+                    echo '<u>';
+                        echo '<p>';
+                            echo 'Ajouter un livre:';
+                        echo '</p>';
+                    echo '</u>';
+
                     echo '<p>';
-                        echo 'Ajouter un livre:';
+                    
+                        echo '<input type="text" name="nom" placeholder="Nom">';
                     echo '</p>';
-                echo '</u>';
 
-                echo '<p>';
-                // echo '<label>';
-                // echo 'Nom :'; 
-                // echo '</label>';
-                    echo '<input type="text" name="nom" placeholder="Nom">';
-                echo '</p>';
+                    echo '<p>';
+                        echo '<input type="text" name="prix" placeholder="Prix">';
+                    echo '</p>';
 
-                echo '<p>';
-                // echo '<label>';
-                // echo 'Prix : ';
-                // echo '</label>';
-                    echo '<input type="text" name="prix" placeholder="Prix">';
-                echo '</p>';
+                    echo '<p>';
+                        echo '<input type="submit" name="btn" value="Valider">';
+                    echo '</p>';
 
-                echo '<p>';
-                    echo '<input type="submit" name="btn" value="Valider">';
-                echo '</p>';
-            echo '</form>';
-            ?>
+                echo '</form>';
+
+                ?>
+
+            </div>
 
         </div>
 
-    </div>
-
-</body>
+    </body>
 
 </html>
